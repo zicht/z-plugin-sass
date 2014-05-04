@@ -1,3 +1,5 @@
+# @version ">=2.0"
+
 sass:
     # The style to use when
     build_style:    compressed
@@ -12,7 +14,7 @@ tasks:
 
     # Trigger used to build the sass in the build process
     _sass.build:
-        set:
+        args:
             _root: build.dir
             _style: sass.build_style
         do: @sass.update
@@ -20,14 +22,14 @@ tasks:
     # Watch the sass dirs in the current working dir
     sass.watch:
         help: "Watch the configured sass dirs"
-        set:
+        args:
             mode: '"watch"'
         do: @sass.update
 
     # Update the sass dirs in the current working dir
     sass.update:
         help: "Compile sass"
-        set:
+        args:
             mode:   ? "update"
             _root:  ? cwd
             _style: ? "nested"
