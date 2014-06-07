@@ -34,5 +34,5 @@ tasks:
             _root:  ? cwd
             _style: ? "nested"
         do: |
-            sass $(sass.opts) $(force ? "--force") -t $(_style) --unix-newlines --no-cache \
+            sass $(sass.opts) $(FORCE ? "--force") -t $(_style) --unix-newlines --no-cache \
             --$(mode) $(sass.dir_spec(_root, sass.dirs))
