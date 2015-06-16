@@ -1,0 +1,5 @@
+tasks:
+    # Update the sass dirs in the current working dir
+    sass.update:
+        do: |
+            zsass $(mode) $(str_replace(":", " ", sass.dir_spec(_root, sass.dirs)))
