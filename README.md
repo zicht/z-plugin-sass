@@ -2,5 +2,6 @@
 
 Hooks into the deploy and provides update and watch commands
 
-# Maintainer(s)
-* Joppe Aarts <joppe@zicht.nl>
+# Maintainers
+* Michael Roterman <michael@zicht.nl>
+* Boudewijn Schoon <boudewijn@zicht.nl>
