@@ -34,6 +34,14 @@ class Plugin extends BasePlugin
 
     public function setContainer(Container $container)
     {
+        $container->decl(
+            ['sass', 'command'],
+            function () {
+                $local = 'node_modules/.bin/sass';
+                return file_exists($local) ? 'node ' . $local : 'sass';
+            }
+        );
+
         $container->method(
             array('sass', 'dir_spec'),
             function($container, $root, $dirs) {
@@ -42,6 +50,7 @@ class Plugin extends BasePlugin
                         "Passed dirs to sass.dir_spec() are invalid, at least 1 element is required"
                     );
                 }
+                $root = ltrim(str_replace(getcwd(), '', $root), '/');
                 $ret = array();
                 foreach ($dirs as $dir) {
                     if (strpos(':', $dir) !== false) {
@@ -51,7 +60,9 @@ class Plugin extends BasePlugin
                         $tgt = rtrim($dir, '/') . '/' . $container->resolve(array('sass', 'css_dir'));
                     }
 
-                    $ret[] = sprintf('%s:%s', rtrim($root, '/') . '/' . $src, rtrim($root, '/') . '/' . $tgt);
+                    $src = ltrim(rtrim($root, '/') . '/' . $src, '/');
+                    $tgt = ltrim(rtrim($root, '/') . '/' . $tgt, '/');
+                    $ret[] = sprintf('%s:%s', $src, $tgt);
                 }
                 return join(' ', $ret);
             }
