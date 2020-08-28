@@ -44,16 +44,25 @@ class Plugin extends BasePlugin
      */
     public function setContainer(Container $container)
     {
+        $container->decl(
+            ['zsass', 'command'],
+            function () {
+                $local = 'node_modules/.bin/zsass';
+                return file_exists($local) ? 'node ' . $local : 'zsass';
+            }
+        );
+
         $container->method('zsass.dir_spec', function($container, $root, $dirs) {
             if (!count($dirs)) {
                 throw new \InvalidArgumentException("Passed dirs to zsass.dir_spec() are invalid, at least 1 element is required");
             }
+            $root = ltrim(str_replace(getcwd(), '', $root), '/');
             $ret = array();
             foreach ($dirs as $dir) {
                 $src = rtrim($dir, '/') . '/' . $container->resolve('zsass.sass_dir');
                 $tgt = rtrim($dir, '/') . '/' . $container->resolve('zsass.css_dir');
 
-                $ret[] = sprintf('%s %s', rtrim($root, '/') . '/' . $src, rtrim($root, '/') . '/' . $tgt);
+                $ret[] = sprintf('%s %s', ltrim(rtrim($root, '/') . '/' . $src, '/'), ltrim(rtrim($root, '/') . '/' . $tgt, '/'));
             }
             return join(' ', $ret);
         });
