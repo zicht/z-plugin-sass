@@ -10,21 +10,21 @@ sass:
 tasks:
     # Add the sass build trigger
     build:
-        post: @_sass.build
+        post: '@_sass.build'
 
     # Trigger used to build the sass in the build process
     _sass.build:
         args:
             _root: build.dir
             _style: sass.build_style
-        do: @sass.update
+        do: '@sass.update'
 
     # Watch the sass dirs in the current working dir
     sass.watch:
         help: "Watch the configured sass dirs"
         args:
             mode: '"watch"'
-        do: @sass.update
+        do: '@sass.update'
 
     # Update the sass dirs in the current working dir
     sass.update:
