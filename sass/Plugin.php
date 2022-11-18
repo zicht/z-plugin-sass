@@ -53,7 +53,7 @@ class Plugin extends BasePlugin
                 $root = ltrim(str_replace(getcwd(), '', $root), '/');
                 $ret = array();
                 foreach ($dirs as $dir) {
-                    if (strpos(':', $dir) !== false) {
+                    if (strpos($dir, ':') !== false) {
                         list($src, $tgt) = explode(':', $dir);
                     } else {
                         $src = rtrim($dir, '/') . '/' . $container->resolve(array('sass', 'sass_dir'));
