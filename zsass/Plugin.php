@@ -46,8 +46,9 @@ class Plugin extends BasePlugin
     {
         $container->decl(
             ['zsass', 'command'],
-            function () {
-                $local = 'node_modules/.bin/zsass';
+            function (Container $container) {
+                $root = trim(str_replace(getcwd(), '', $container->resolve('_root')), '/');
+                $local = ($root ? $root . '/' : '') . 'node_modules/.bin/zsass';
                 return file_exists($local) ? 'node ' . $local : 'zsass';
             }
         );

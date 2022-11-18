@@ -36,8 +36,9 @@ class Plugin extends BasePlugin
     {
         $container->decl(
             ['sass', 'command'],
-            function () {
-                $local = 'node_modules/.bin/sass';
+            function (Container $container) {
+                $root = trim(str_replace(getcwd(), '', $container->resolve('_root')), '/');
+                $local = ($root ? $root . '/' : '') . 'node_modules/.bin/sass';
                 return file_exists($local) ? 'node ' . $local : 'sass';
             }
         );
